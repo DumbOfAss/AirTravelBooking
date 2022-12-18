@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTravelBooking.Server", "AirTravelBooking\Server\AirTravelBooking.Server.csproj", "{7FD3A7C5-286E-47BE-BC77-20F0002C12B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTravelBooking.Server", "AirTravelBooking\Server\AirTravelBooking.Server.csproj", "{7FD3A7C5-286E-47BE-BC77-20F0002C12B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTravelBooking.Client", "AirTravelBooking\Client\AirTravelBooking.Client.csproj", "{6D4C84D0-A10D-4BAA-BDBC-D0592E4FDA2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTravelBooking.Client", "AirTravelBooking\Client\AirTravelBooking.Client.csproj", "{6D4C84D0-A10D-4BAA-BDBC-D0592E4FDA2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTravelBooking.Shared", "AirTravelBooking\Shared\AirTravelBooking.Shared.csproj", "{A57311FB-D5D6-4006-BAFB-24DB28B8FFA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTravelBooking.Shared", "AirTravelBooking\Shared\AirTravelBooking.Shared.csproj", "{A57311FB-D5D6-4006-BAFB-24DB28B8FFA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
