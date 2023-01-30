@@ -1,4 +1,5 @@
-﻿using AirTravelBooking.Server.Models;
+﻿using AirTravelBooking.Server.Configurations.Entities;
+using AirTravelBooking.Server.Models;
 using AirTravelBooking.Shared.Domain;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -26,6 +27,17 @@ namespace AirTravelBooking.Server.Data
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Seat> Seats { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new FeatureSeedConfiguration());
+            builder.ApplyConfiguration(new DestinationSeedConfiguration());
+            builder.ApplyConfiguration(new BaggageSeedConfiguration());
+            builder.ApplyConfiguration(new SeatSeedConfiguration());
+
+        }
 
     }
 }

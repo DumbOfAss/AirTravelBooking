@@ -8,8 +8,8 @@ namespace AirTravelBooking.Shared.Domain
 {
     public class Destination : BaseDomainModel
     {
-        public string Name { get; set; }
+        public string BoardingName { get; set; }
+        public string ArrivallName { get; set; }
         public int Distance { get; set; }
-        public DateTime Duration { get; set; }
     }
 }

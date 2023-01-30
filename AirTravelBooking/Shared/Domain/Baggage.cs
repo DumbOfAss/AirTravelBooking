@@ -9,7 +9,7 @@ namespace AirTravelBooking.Shared.Domain
     public class Baggage : BaseDomainModel
     {
         public string Name { get; set; }
-        public float Weight { get; set; }
+        public double Weight { get; set; }
         public string Size { get; set; }
         //removed BaggageOwner - makes no fucking sense
     }
