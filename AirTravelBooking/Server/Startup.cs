@@ -1,5 +1,7 @@
 using AirTravelBooking.Server.Data;
+using AirTravelBooking.Server.IRepository;
 using AirTravelBooking.Server.Models;
+using AirTravelBooking.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,8 @@ namespace AirTravelBooking.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

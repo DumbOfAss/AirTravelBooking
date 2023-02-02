@@ -23,7 +23,7 @@ namespace AirTravelBooking.Server.Data
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<Baggage> Baggages { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Class> Classes { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Seat> Seats { get; set; }

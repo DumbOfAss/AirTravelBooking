@@ -18,7 +18,8 @@ namespace AirTravelBooking.Server.Configurations.Entities
                     Id = 1,
                     Availability = "Choose a seat",
                     Location = "Not Chosen",
-                });
+                }
+                );
         }
     }
 }

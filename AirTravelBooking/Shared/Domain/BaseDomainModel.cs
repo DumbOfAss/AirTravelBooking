@@ -26,7 +26,7 @@ namespace AirTravelBooking.Shared.Domain
         public string Location { get; set; }
     }
     
-    public class Class : BaseDomainModel
+    public class Priority : BaseDomainModel
     {
         public string Name { get; set; }
         public float Price { get; set; }

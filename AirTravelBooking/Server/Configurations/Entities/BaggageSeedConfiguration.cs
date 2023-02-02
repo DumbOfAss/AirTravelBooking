@@ -19,7 +19,8 @@ namespace AirTravelBooking.Server.Configurations.Entities
                     Name = "Example",
                     Weight = 2.5,
                     Size = "Medium"
-                });
+                }
+                );
         }
     }
 }

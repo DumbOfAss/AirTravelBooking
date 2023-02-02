@@ -17,8 +17,9 @@ namespace AirTravelBooking.Server.Configurations.Entities
                 {
                     Id = 1,
                     BoardingName = "Boarding Airport",
-                    ArrivallName = "Arrival Airport"
-                });
+                    ArrivalName = "Arrival Airport"
+                }
+                );
         }
     }
 }
