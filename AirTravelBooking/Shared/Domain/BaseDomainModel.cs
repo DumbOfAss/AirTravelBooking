@@ -19,12 +19,6 @@ namespace AirTravelBooking.Shared.Domain
     {
         public string Name { get; set; }
     }
-
-    public class Seat : BaseDomainModel
-    {
-        public string Availability { get; set; }
-        public string Location { get; set; }
-    }
     
     public class Priority : BaseDomainModel
     {

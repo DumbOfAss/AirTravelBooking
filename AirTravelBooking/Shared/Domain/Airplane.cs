@@ -11,11 +11,5 @@ namespace AirTravelBooking.Shared.Domain
         public string Manufacturer { get; set; }
         public string Model { get; set; }
         public string Operator { get; set; }
-        public int SeatId { get; set; }
-        public virtual Seat Seat { get; set; }
-        public int PriorityId { get; set; }
-        public virtual Priority Priority { get; set; }
-        public int BaggageId { get; set; }
-        public virtual Baggage Baggage { get; set; }
     }
 }

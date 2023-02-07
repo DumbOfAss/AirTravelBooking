@@ -31,7 +31,7 @@ namespace AirTravelBooking.Server.Controllers
         public async Task<IActionResult> GetPriorities()
         {
             //return await _context.Priorities.ToListAsync();
-            var priorities = await _unitofwork.Priorities.GetAll();
+            var priorities = await _unitofwork.Priorities.GetAll(includes: q => q.Include(x=>x.Feature));
             return Ok(priorities);
         }
 

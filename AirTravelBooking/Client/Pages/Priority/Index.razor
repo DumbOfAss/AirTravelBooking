@@ -1,0 +1,64 @@
+﻿@page "/Priority"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize] 
+
+@if(Priorities == null)
+{
+    <div class="alert alert-info">Loading Priorities...</div>
+}
+else
+            {
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Features</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var priority in Priorities)
+                {
+                    <tr>
+                        <td>@priority.Name</td>
+                        <td>@priority.Price</td>
+                        <td>@priority.Feature.Name</td>
+                        <td>
+                            <a href="/priorities/view/@priority.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/priorities/view/@priority.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(() => Delete(priority.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+                    </tbody>
+                </table>
+            }
+
+
+@code {
+    private List<Priority> Priorities;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Priorities = await _client.GetFromJsonAsync<List<Priority>>($"{EndPoints.PrioritiesEndPoint}");
+    }
+
+    async Task Delete(int PriorityId)
+    {
+        var priority = Priorities.First(q => q.Id == PriorityId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {priority.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{EndPoints.PrioritiesEndPoint}/PriorityId");
+            await OnInitializedAsync();
+        }
+    }
+}

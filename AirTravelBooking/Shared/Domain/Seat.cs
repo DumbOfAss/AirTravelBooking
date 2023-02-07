@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AirTravelBooking.Shared.Domain
 {
-    public class Destination : BaseDomainModel
+    public class Seat : BaseDomainModel
     {
-        public string Name { get; set; }
-        public int Distance { get; set; }
+        public string Availability { get; set; }
+        public string Location { get; set; }
     }
 }

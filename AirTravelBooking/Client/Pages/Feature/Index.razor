@@ -1,0 +1,60 @@
+﻿@page "/Feature"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+@if (Features == null)
+{
+    <div class="alert alert-info">Loading Features...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var feature in Features)
+            {
+                <tr>
+                    <td>@feature.Name</td>
+                    <td>
+                        <a href="/features/view/@feature.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/features/view/@feature.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(feature.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Feature> Features;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Features = await _client.GetFromJsonAsync<List<Feature>>($"{EndPoints.FeaturesEndPoint}");
+    }
+
+    async Task Delete(int FeatureId)
+    {
+        var feature = Features.First(q => q.Id == FeatureId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {feature.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{EndPoints.FeaturesEndPoint}/FeatureId");
+            await OnInitializedAsync();
+        }
+    }
+}

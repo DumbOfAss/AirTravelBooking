@@ -16,8 +16,7 @@ namespace AirTravelBooking.Server.Configurations.Entities
                 new Destination
                 {
                     Id = 1,
-                    BoardingName = "Boarding Airport",
-                    ArrivalName = "Arrival Airport"
+                    Name = "Malaysia",
                 }
                 );
         }

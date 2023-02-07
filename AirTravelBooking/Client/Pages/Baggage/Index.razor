@@ -1,0 +1,64 @@
+﻿@page "/Baggages"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+@if (Baggages == null)
+{
+    <div class="alert alert-info">Loading Baggages...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Weight</th>
+                <th>Size</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var baggage in Baggages)
+            {
+                <tr>
+                    <td>@baggage.Name</td>
+                    <td>@baggage.Weight</td>
+                    <td>@baggage.Size</td>
+                    <td>
+                        <a href="/baggages/view/@baggage.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/baggages/view/@baggage.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(baggage.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Baggage> Baggages;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Baggages = await _client.GetFromJsonAsync<List<Baggage>>($"{EndPoints.BaggagesEndPoint}");
+    }
+
+    async Task Delete(int BaggageId)
+    {
+        var baggage = Baggages.First(q => q.Id == BaggageId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {baggage.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{EndPoints.BaggagesEndPoint}/BaggageId");
+            await OnInitializedAsync();
+        }
+    }
+}

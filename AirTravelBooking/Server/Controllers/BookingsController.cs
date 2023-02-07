@@ -31,7 +31,7 @@ namespace AirTravelBooking.Server.Controllers
         public async Task<IActionResult> GetBookings()
         {
             //return await _context.Bookings.ToListAsync();
-            var bookings = await _unitofwork.Bookings.GetAll();
+            var bookings = await _unitofwork.Bookings.GetAll(includes: q => q.Include(x => x.Seat).Include(x => x.Priority).Include(x => x.Baggage).Include(x => x.Customer).Include(x => x.Destination));
             return Ok(bookings);
         }
 
