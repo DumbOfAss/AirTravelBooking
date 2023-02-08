@@ -1,46 +1,55 @@
 ﻿@page "/Priority"
 @inject HttpClient _client
 @inject IJSRuntime js
-@attribute [Authorize] 
+@attribute [Authorize]
 
-@if(Priorities == null)
+<h3>Priority</h3>
+
+<a href="/Priority/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Priority
+</a>
+<br />
+<br />
+
+@if (Priorities == null)
 {
     <div class="alert alert-info">Loading Priorities...</div>
 }
 else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Features</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var priority in Priorities)
             {
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Features</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(var priority in Priorities)
-                {
-                    <tr>
-                        <td>@priority.Name</td>
-                        <td>@priority.Price</td>
-                        <td>@priority.Feature.Name</td>
-                        <td>
-                            <a href="/priorities/view/@priority.Id" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/priorities/view/@priority.Id" class="btn btn-warning">
-                                <span class="oi oi-pencil"></span>
-                            </a>
-                            <button class="btn btn-danger" @onclick="@(() => Delete(priority.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
-                        </td>
-                    </tr>
-                }
-                    </tbody>
-                </table>
+                <tr>
+                    <td>@priority.Name</td>
+                    <td>@priority.Price</td>
+                    <td>@priority.Feature.Name</td>
+                    <td>
+                        <a href="/priorities/view/@priority.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/priorities/view/@priority.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(priority.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
+        </tbody>
+    </table>
+}
 
 
 @code {

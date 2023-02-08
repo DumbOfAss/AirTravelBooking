@@ -1,0 +1,47 @@
+﻿@page "/Priority/Create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Priorities</h3>
+<hr />
+<br />
+
+<EditForm Model="@priority" OnValidSubmit="CreatePriority">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Feature: </label>
+        <div>
+            <InputSelect @bind-Value="priority.FeatureId" class="form-control">
+                <option value="">-- Select Feature --</option>
+                @if(Features != null)
+                {
+                    foreach(var feature in Features)
+                        {
+                            <option value="@feature.Id">@feature.Name</option>
+                        }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => priority.FeatureId)" />
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    Priority priority = new Priority();
+
+    private IList<Feature> Features;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Features = await _client.GetFromJsonAsync<List<Feature>>($"{EndPoints.FeaturesEndPoint}");
+    }
+
+    private async Task CreatePriority()
+    {
+        await _client.PostAsJsonAsync(EndPoints.PrioritiesEndPoint, priority);
+        _navManager.NavigateTo("/Priority");
+    }
+
+}
