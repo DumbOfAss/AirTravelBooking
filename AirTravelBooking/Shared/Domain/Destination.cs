@@ -10,5 +10,6 @@ namespace AirTravelBooking.Shared.Domain
     {
         public string Name { get; set; }
         public int Distance { get; set; }
+        public DateTime TravelTime { get; set; }
     }
 }

@@ -6,27 +6,7 @@
 <hr />
 <br />
 
-<EditForm Model="@priority" OnValidSubmit="CreatePriority">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Feature: </label>
-        <div>
-            <InputSelect @bind-Value="priority.FeatureId" class="form-control">
-                <option value="">-- Select Feature --</option>
-                @if(Features != null)
-                {
-                    foreach(var feature in Features)
-                        {
-                            <option value="@feature.Id">@feature.Name</option>
-                        }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => priority.FeatureId)" />
-        </div>
-    </div>
-</EditForm>
+<FormComponent ButtonText="Update" OnValidSubmit="@CreatePriority" priority="priority" />
 
 @code {
     Priority priority = new Priority();

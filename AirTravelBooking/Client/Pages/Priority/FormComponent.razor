@@ -1,0 +1,61 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@priority" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+    <div class="form-group">
+        <label>Priority Name: </label>
+        <div>
+            <InputText @bind-Value="@priority.Name" class="form-control" />
+            <ValidationMessage For="@(() => priority.Name)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Feature: </label>
+        <div>
+            <InputSelect @bind-Value="priority.FeatureId" class="form-control">
+                <option value="">-- Select Feature --</option>
+                @if (Features != null)
+                {
+                    foreach (var feature in Features)
+                    {
+                        <option value="@feature.Id">@feature.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => priority.FeatureId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Priority Price: </label>
+        <div>
+            <InputNumber @bind-Value="priority.Price" class="form-control" />
+            <ValidationMessage For="@(() => priority.Price)" />
+        </div>
+    </div>
+        </fieldset>
+    @if (!Disabled)
+    {
+    <button type="submit" class="btn btn-success btn-block">
+        Create Priority
+    </button>
+    }
+    <AirTravelBooking.Client.Components.BackToList Target="features" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Priority priority { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Feature> Features;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Features = await _client.GetFromJsonAsync<List<Feature>>($"{EndPoints.FeaturesEndPoint}");
+    }
+}

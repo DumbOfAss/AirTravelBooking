@@ -1,44 +1,53 @@
 ﻿@page "/Seats"
 @inject HttpClient _client
 @inject IJSRuntime js
-@attribute [Authorize] 
+@attribute [Authorize]
 
-@if(Seats == null)
+<h3>Seats</h3>
+
+<a href="/Seats/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Seats
+</a>
+<br />
+<br />
+
+@if (Seats == null)
 {
     <div class="alert alert-info">Loading Seats...</div>
 }
 else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Availability</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var seat in Seats)
             {
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Availability</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(var seat in Seats)
-                {
-                    <tr>
-                        <td>@seat.Location</td>
-                        <td>@seat.Availability</td>
-                        <td>
-                            <a href="/seats/view/@seat.Id" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/seats/view/@seat.Id" class="btn btn-warning">
-                                <span class="oi oi-pencil"></span>
-                            </a>
-                            <button class="btn btn-danger" @onclick="@(() => Delete(seat.Id))">
-                                <span class="oi oi-delete"></span>
-                            </button>
-                        </td>
-                    </tr>
-                }
-                    </tbody>
-                </table>
+                <tr>
+                    <td>@seat.Location</td>
+                    <td>@seat.Availability</td>
+                    <td>
+                        <a href="/Seats/view/@seat.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Seats/edit/@seat.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(seat.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
             }
+        </tbody>
+    </table>
+}
 
 
 @code {

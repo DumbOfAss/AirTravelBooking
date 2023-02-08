@@ -1,0 +1,14 @@
+﻿@page "/Feature/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View</h3>
+<FormComponent feature="feature" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Feature feature = new Feature();
+    protected async override Task OnParametersSetAsync()
+    {
+        feature = await
+        _client.GetFromJsonAsync<Feature>($"{EndPoints.FeaturesEndPoint}/{id}");
+    }
+}

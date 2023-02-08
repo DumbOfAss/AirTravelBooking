@@ -18,6 +18,11 @@ namespace AirTravelBooking.Server.Configurations.Entities
                 {
                     Id = 1,
                     Name = "Blank"
+                },
+                new Feature
+                {
+                    Id = 2,
+                    Name = "Wider Seats"
                 }
             );
         }

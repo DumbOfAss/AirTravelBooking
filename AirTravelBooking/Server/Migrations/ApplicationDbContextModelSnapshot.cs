@@ -4,16 +4,14 @@ using AirTravelBooking.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AirTravelBooking.Server.Data.Migrations
+namespace AirTravelBooking.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230131073508_AddApplicationTables2")]
-    partial class AddApplicationTables2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,12 +97,6 @@ namespace AirTravelBooking.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BaggageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
 
@@ -114,16 +106,7 @@ namespace AirTravelBooking.Server.Data.Migrations
                     b.Property<string>("Operator")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SeatId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BaggageId");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasIndex("SeatId");
 
                     b.ToTable("Airplanes");
                 });
@@ -171,6 +154,9 @@ namespace AirTravelBooking.Server.Data.Migrations
                     b.Property<DateTime>("Arrival")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("BaggageId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Boarding")
                         .HasColumnType("datetime2");
 
@@ -180,38 +166,27 @@ namespace AirTravelBooking.Server.Data.Migrations
                     b.Property<int>("DestinationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PriorityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AirplaneId");
+
+                    b.HasIndex("BaggageId");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("DestinationId");
 
+                    b.HasIndex("PriorityId");
+
+                    b.HasIndex("SeatId");
+
                     b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("AirTravelBooking.Shared.Domain.Class", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("FeatureId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FeatureId");
-
-                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("AirTravelBooking.Shared.Domain.Customer", b =>
@@ -248,14 +223,14 @@ namespace AirTravelBooking.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ArrivalName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BoardingName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Distance")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TravelTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -265,9 +240,9 @@ namespace AirTravelBooking.Server.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalName = "Arrival Airport",
-                            BoardingName = "Boarding Airport",
-                            Distance = 0
+                            Distance = 0,
+                            Name = "Malaysia",
+                            TravelTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -290,7 +265,35 @@ namespace AirTravelBooking.Server.Data.Migrations
                         {
                             Id = 1,
                             Name = "Blank"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Wider Seats"
                         });
+                });
+
+            modelBuilder.Entity("AirTravelBooking.Shared.Domain.Priority", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FeatureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeatureId");
+
+                    b.ToTable("Priorities");
                 });
 
             modelBuilder.Entity("AirTravelBooking.Shared.Domain.Seat", b =>
@@ -300,8 +303,8 @@ namespace AirTravelBooking.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Availability")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Availability")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -314,7 +317,7 @@ namespace AirTravelBooking.Server.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Availability = "Choose a seat",
+                            Availability = false,
                             Location = "Not Chosen"
                         });
                 });
@@ -557,38 +560,17 @@ namespace AirTravelBooking.Server.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AirTravelBooking.Shared.Domain.Airplane", b =>
-                {
-                    b.HasOne("AirTravelBooking.Shared.Domain.Baggage", "Baggage")
-                        .WithMany()
-                        .HasForeignKey("BaggageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AirTravelBooking.Shared.Domain.Class", "Class")
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AirTravelBooking.Shared.Domain.Seat", "Seat")
-                        .WithMany()
-                        .HasForeignKey("SeatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Baggage");
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Seat");
-                });
-
             modelBuilder.Entity("AirTravelBooking.Shared.Domain.Booking", b =>
                 {
                     b.HasOne("AirTravelBooking.Shared.Domain.Airplane", "Airplane")
                         .WithMany()
                         .HasForeignKey("AirplaneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirTravelBooking.Shared.Domain.Baggage", "Baggage")
+                        .WithMany()
+                        .HasForeignKey("BaggageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -604,14 +586,32 @@ namespace AirTravelBooking.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AirTravelBooking.Shared.Domain.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirTravelBooking.Shared.Domain.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Airplane");
+
+                    b.Navigation("Baggage");
 
                     b.Navigation("Customer");
 
                     b.Navigation("Destination");
+
+                    b.Navigation("Priority");
+
+                    b.Navigation("Seat");
                 });
 
-            modelBuilder.Entity("AirTravelBooking.Shared.Domain.Class", b =>
+            modelBuilder.Entity("AirTravelBooking.Shared.Domain.Priority", b =>
                 {
                     b.HasOne("AirTravelBooking.Shared.Domain.Feature", "Feature")
                         .WithMany()

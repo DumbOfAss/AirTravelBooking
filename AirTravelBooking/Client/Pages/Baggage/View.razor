@@ -1,0 +1,14 @@
+﻿@page "/Baggages/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View</h3>
+<FormComponent baggage="baggage" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Baggage baggage = new Baggage();
+    protected async override Task OnParametersSetAsync()
+    {
+        baggage = await
+        _client.GetFromJsonAsync<Baggage>($"{EndPoints.BaggagesEndPoint}/{id}");
+    }
+}

@@ -1,0 +1,30 @@
+﻿<h3>FormComponent</h3>
+
+<EditForm Model="@seat" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Seat Location: </label>
+            <div>
+                <InputText @bind-Value="@seat.Location" class="form-control" />
+                <ValidationMessage For="@(() => seat.Location)" />
+            </div>
+        </div>
+    </fieldset>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+        <AirTravelBooking.Client.Components.BackToList Target="features" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Seat seat { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}

@@ -3,6 +3,15 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+<h3>Customers</h3>
+
+<a href="/Customers/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Customers
+</a>
+<br />
+<br />
+
 @if (Customers == null)
 {
     <div class="alert alert-info">Loading Customers...</div>
@@ -30,10 +39,10 @@ else
                 <td>@customer.Contact</td>
                 <td>@customer.Payment</td>
                 <td>
-                    <a href="/customers/view/@customer.Id" class="btn btn-primary">
+                    <a href="/Customers/view/@customer.Id" class="btn btn-primary">
                         <span class="oi oi-book"></span>
                     </a>
-                    <a href="/customers/view/@customer.Id" class="btn btn-warning">
+                    <a href="/Customers/edit/@customer.Id" class="btn btn-warning">
                         <span class="oi oi-pencil"></span>
                     </a>
                     <button class="btn btn-danger" @onclick="@(() => Delete(customer.Id))">

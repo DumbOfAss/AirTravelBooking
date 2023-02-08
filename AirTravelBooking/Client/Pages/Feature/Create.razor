@@ -1,0 +1,20 @@
+﻿@page "/Feature/Create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Features</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Feature" OnValidSubmit="@CreateFeature" feature="feature" />
+
+@code {
+    Feature feature = new Feature();
+
+    private async Task CreateFeature()
+    {
+        await _client.PostAsJsonAsync(EndPoints.FeaturesEndPoint, feature);
+        _navManager.NavigateTo("/Feature");
+    }
+
+}

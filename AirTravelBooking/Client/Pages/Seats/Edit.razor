@@ -1,0 +1,24 @@
+﻿@page "/Seats/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Seat</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditSeat" seat="seat" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Seat seat = new Seat();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        seat = await _client.GetFromJsonAsync<Seat>($"{EndPoints.SeatsEndPoint}/{id}");
+    }
+
+    async Task EditSeat()
+    {
+        await _client.PutAsJsonAsync($"{EndPoints.SeatsEndPoint}/{id}", seat);
+        _navManager.NavigateTo("/Seats/");
+    }
+
+}

@@ -1,0 +1,14 @@
+﻿@page "/Priority/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View</h3>
+<FormComponent priority="priority" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Priority priority = new Priority();
+    protected async override Task OnParametersSetAsync()
+    {
+        priority = await
+        _client.GetFromJsonAsync<Priority>($"{EndPoints.PrioritiesEndPoint}/{id}");
+    }
+}

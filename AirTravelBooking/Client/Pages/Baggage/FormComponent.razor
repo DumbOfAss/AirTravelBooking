@@ -1,0 +1,46 @@
+﻿<h3>FormComponent</h3>
+
+<EditForm Model="@baggage" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled ="@Disabled">
+    <div class="form-group">
+        <label>Baggage Name: </label>
+        <div>
+            <InputText @bind-Value="@baggage.Name" class="form-control" />
+            <ValidationMessage For="@(() => baggage.Name)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Baggage Price: </label>
+        <div>
+            <InputNumber @bind-Value="baggage.Weight" class="form-control" />
+            <ValidationMessage For="@(() => baggage.Weight)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Baggage Name: </label>
+        <div>
+            <InputText @bind-Value="@baggage.Size" class="form-control" />
+            <ValidationMessage For="@(() => baggage.Size)" />
+        </div>
+    </div>
+        </fieldset>
+    @if (!Disabled)
+    {
+    <button type="submit" class="btn btn-success btn-block">
+        Create Baggage
+    </button>
+    }
+    <AirTravelBooking.Client.Components.BackToList Target="features" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Baggage baggage { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}

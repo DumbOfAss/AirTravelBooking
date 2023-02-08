@@ -1,0 +1,14 @@
+﻿@page "/Airplanes/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View</h3>
+<FormComponent airplane="airplane" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Airplane airplane = new Airplane();
+    protected async override Task OnParametersSetAsync()
+    {
+        airplane = await
+        _client.GetFromJsonAsync<Airplane>($"{EndPoints.AirplanesEndPoint}/{id}");
+    }
+}

@@ -1,0 +1,24 @@
+﻿@page "/Feature/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Feature</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditFeature" feature="feature"/>
+
+@code {
+    [Parameter] public int id { get; set; }
+    Feature feature = new Feature();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        feature = await _client.GetFromJsonAsync<Feature>($"{EndPoints.FeaturesEndPoint}/{id}");
+    }
+
+    async Task EditFeature()
+    {
+        await _client.PutAsJsonAsync($"{EndPoints.FeaturesEndPoint}/{id}", feature);
+        _navManager.NavigateTo("/Feature/");
+    }
+
+}

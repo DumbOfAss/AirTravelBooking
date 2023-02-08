@@ -1,0 +1,37 @@
+﻿@page "/Bookings/Create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Bookings</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Booking" OnValidSubmit="@CreateBooking" booking="booking" />
+
+@code {
+    Booking booking = new Booking();
+
+    private IList<Seat> Seats;
+    private IList<Destination> Destinations;
+    private IList<Customer> Customers;
+    private IList<Airplane> Airplanes;
+    private IList<Priority> Priorities;
+    private IList<Baggage> Baggages;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Seats = await _client.GetFromJsonAsync<List<Seat>>($"{EndPoints.SeatsEndPoint}");
+        Destinations = await _client.GetFromJsonAsync<List<Destination>>($"{EndPoints.DestinationsEndPoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{EndPoints.CustomersEndPoint}");
+        Airplanes = await _client.GetFromJsonAsync<List<Airplane>>($"{EndPoints.AirplanesEndPoint}");
+        Priorities = await _client.GetFromJsonAsync<List<Priority>>($"{EndPoints.PrioritiesEndPoint}");
+        Baggages = await _client.GetFromJsonAsync<List<Baggage>>($"{EndPoints.BaggagesEndPoint}");
+    }
+
+    private async Task CreateBooking()
+    {
+        await _client.PostAsJsonAsync(EndPoints.BookingsEndPoint, booking);
+        _navManager.NavigateTo("/Bookings");
+    }
+
+}

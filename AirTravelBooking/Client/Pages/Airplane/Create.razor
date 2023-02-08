@@ -1,0 +1,20 @@
+﻿@page "/Airplanes/Create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Priorities</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Airplane" OnValidSubmit="@CreateAirplane" airplane="airplane" />
+
+@code {
+    Airplane airplane = new Airplane();
+
+    private async Task CreateAirplane()
+    {
+        await _client.PostAsJsonAsync(EndPoints.AirplanesEndPoint, airplane);
+        _navManager.NavigateTo("/Airplane");
+    }
+
+}

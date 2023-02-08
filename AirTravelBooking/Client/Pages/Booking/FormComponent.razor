@@ -1,0 +1,114 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@booking" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled ="@Disabled">
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputSelect @bind-Value="booking.CustomerId" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers != null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">@customer.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => booking.CustomerId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Destination Name: </label>
+        <div>
+            <InputSelect @bind-Value="booking.DestinationId" class="form-control">
+                <option value="">-- Select Destination --</option>
+                @if (Destinations != null)
+                {
+                    foreach (var destination in Destinations)
+                    {
+                        <option value="@destination.Id">@destination.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => booking.DestinationId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Boarding Time: </label>
+        <div>
+            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="dd/MM/yyyy hh:mm:ss" @bind-Value="@booking.Boarding" class="form-control" />
+            <ValidationMessage For="@(() => booking.Boarding)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Airplane Model: </label>
+        <div>
+            <InputSelect @bind-Value="booking.AirplaneId" class="form-control">
+                <option value="">-- Select Airplane --</option>
+                @if (Airplanes != null)
+                {
+                    foreach (var airplane in Airplanes)
+                    {
+                        <option value="@airplane.Id">@airplane.Model</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => booking.AirplaneId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Priority: </label>
+        <div>
+            <InputSelect @bind-Value="booking.PriorityId" class="form-control">
+                <option value="">-- Select Priority --</option>
+                @if (Priorities != null)
+                {
+                    foreach (var priority in Priorities)
+                    {
+                        <option value="@priority.Id">@priority.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => booking.PriorityId)" />
+        </div>
+    </div>
+        </fieldset>
+    @if (!Disabled)
+    {
+    <button type="submit" class="btn btn-success btn-block">
+        Create Booking
+    </button>
+    }
+    <AirTravelBooking.Client.Components.BackToList Target="features" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Booking booking { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Seat> Seats;
+    private IList<Destination> Destinations;
+    private IList<Customer> Customers;
+    private IList<Airplane> Airplanes;
+    private IList<Priority> Priorities;
+    private IList<Baggage> Baggages;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Seats = await _client.GetFromJsonAsync<List<Seat>>($"{EndPoints.SeatsEndPoint}");
+        Destinations = await _client.GetFromJsonAsync<List<Destination>>($"{EndPoints.DestinationsEndPoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{EndPoints.CustomersEndPoint}");
+        Airplanes = await _client.GetFromJsonAsync<List<Airplane>>($"{EndPoints.AirplanesEndPoint}");
+        Priorities = await _client.GetFromJsonAsync<List<Priority>>($"{EndPoints.PrioritiesEndPoint}");
+        Baggages = await _client.GetFromJsonAsync<List<Baggage>>($"{EndPoints.BaggagesEndPoint}");
+    }
+}

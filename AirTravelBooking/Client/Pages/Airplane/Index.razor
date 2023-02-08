@@ -3,6 +3,15 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+<h3>Airplanes</h3>
+
+<a href="/Airplanes/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Airplane
+</a>
+<br />
+<br />
+
 @if (Airplanes == null)
 {
     <div class="alert alert-info">Loading Airplanes...</div>
@@ -26,10 +35,10 @@ else
                     <td>@airplane.Manufacturer</td>
                     <td>@airplane.Operator</td>
                     <td>
-                        <a href="/airplanes/view/@airplane.Id" class="btn btn-primary">
+                        <a href="/Airplanes/view/@airplane.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/airplanes/view/@airplane.Id" class="btn btn-warning">
+                        <a href="/Airplanes/edit/@airplane.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(airplane.Id))">

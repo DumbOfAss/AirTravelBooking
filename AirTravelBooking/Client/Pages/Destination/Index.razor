@@ -3,6 +3,15 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+<h3>Destinations</h3>
+
+<a href="/Destinations/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Destination
+</a>
+<br />
+<br />
+
 @if (Destinations == null)
 {
     <div class="alert alert-info">Loading Destinations...</div>
@@ -27,7 +36,7 @@ else
                         <a href="/destinations/view/@destination.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/destinations/view/@destination.Id" class="btn btn-warning">
+                        <a href="/Destinations/edit/@destination.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(destination.Id))">

@@ -1,0 +1,24 @@
+﻿@page "/Baggages/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Baggage</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditBaggage" baggage="baggage" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Baggage baggage = new Baggage();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        baggage = await _client.GetFromJsonAsync<Baggage>($"{EndPoints.PrioritiesEndPoint}/{id}");
+    }
+
+    async Task EditBaggage()
+    {
+        await _client.PutAsJsonAsync($"{EndPoints.PrioritiesEndPoint}/{id}", baggage);
+        _navManager.NavigateTo("/Baggages/");
+    }
+
+}

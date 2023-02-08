@@ -3,6 +3,15 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
+<h3>Bookings</h3>
+
+<a href="/Bookings/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Booking
+</a>
+<br />
+<br />
+
 @if (Bookings == null)
 {
     <div class="alert alert-info">Loading Bookings...</div>
@@ -12,10 +21,10 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Booking Id</th>
                 <th>Name</th>
                 <th>Destination</th>
-                <th>Date</th>
+                <th>Airplane Model</th>
+                <th>Priority</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,16 +32,15 @@ else
             @foreach (var booking in Bookings)
             {
                 <tr>
-                    <td>@booking.Id</td>
                     <td>@booking.Customer.Name</td>
                     <td>@booking.Destination.Name</td>
-                    <td>@booking.Boarding.Date.ToString("dd MMMM yyyy")</td>
                     <td>@booking.Airplane.Model</td>
+                    <td>@booking.Priority.Name</td>
                     <td>
-                        <a href="/bookings/view/@booking.Id" class="btn btn-primary">
+                        <a href="/Bookings/view/@booking.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/bookings/view/@booking.Id" class="btn btn-warning">
+                        <a href="/Bookings/edit/@booking.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(booking.Id))">

@@ -5,6 +5,13 @@
 
 <h3>Features</h3>
 
+<a href="/Feature/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Feature
+</a>
+<br />
+<br />
+
 @if (Features == null)
 {
     <div class="alert alert-info">Loading Features...</div>
@@ -24,10 +31,10 @@ else
                 <tr>
                     <td>@feature.Name</td>
                     <td>
-                        <a href="/features/view/@feature.Id" class="btn btn-primary">
+                        <a href="/Feature/view/@feature.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/features/view/@feature.Id" class="btn btn-warning">
+                        <a href="/Feature/edit/@feature.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(feature.Id))">

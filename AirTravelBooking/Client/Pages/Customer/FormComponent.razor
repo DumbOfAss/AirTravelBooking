@@ -1,0 +1,62 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@customer" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled ="@Disabled">
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputText @bind-Value="@customer.Name" class="form-control" />
+            <ValidationMessage For="@(() => customer.Name)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputText @bind-Value="@customer.Password" class="form-control" />
+            <ValidationMessage For="@(() => customer.Password)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputText @bind-Value="@customer.Address" class="form-control" />
+            <ValidationMessage For="@(() => customer.Address)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputText @bind-Value="@customer.Contact" class="form-control" />
+            <ValidationMessage For="@(() => customer.Contact)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Name: </label>
+        <div>
+            <InputText @bind-Value="@customer.Payment" class="form-control" />
+            <ValidationMessage For="@(() => customer.Payment)" />
+        </div>
+    </div>
+        </fieldset>
+    @if (!Disabled)
+    {
+    <button type="submit" class="btn btn-success btn-block">
+        Create Customer
+    </button>
+    }
+    <AirTravelBooking.Client.Components.BackToList Target="features" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Customer customer { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}

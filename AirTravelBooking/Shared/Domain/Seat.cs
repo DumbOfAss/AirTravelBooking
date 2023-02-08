@@ -8,7 +8,7 @@ namespace AirTravelBooking.Shared.Domain
 {
     public class Seat : BaseDomainModel
     {
-        public string Availability { get; set; }
+        public bool Availability { get; set; }
         public string Location { get; set; }
     }
 }

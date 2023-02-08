@@ -35,10 +35,10 @@ else
                     <td>@priority.Price</td>
                     <td>@priority.Feature.Name</td>
                     <td>
-                        <a href="/priorities/view/@priority.Id" class="btn btn-primary">
+                        <a href="/Priority/view/@priority.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/priorities/view/@priority.Id" class="btn btn-warning">
+                        <a href="/Priority/edit/@priority.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(priority.Id))">

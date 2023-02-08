@@ -16,7 +16,7 @@ namespace AirTravelBooking.Server.Configurations.Entities
                 new Seat
                 {
                     Id = 1,
-                    Availability = "Choose a seat",
+                    Availability = false,
                     Location = "Not Chosen",
                 }
                 );

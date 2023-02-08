@@ -1,0 +1,30 @@
+﻿<h3>FormComponent</h3>
+
+<EditForm Model="@feature" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled ="@Disabled">
+    <div class="form-group">
+        <label>Feature Name: </label>
+        <div>
+            <InputText @bind-Value="@feature.Name" class="form-control" />
+            <ValidationMessage For="@(() => feature.Name)" />
+        </div>
+    </div>
+    </fieldset>
+    @if (!Disabled)
+    {
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+    }
+    <AirTravelBooking.Client.Components.BackToList Target="Feature"/>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Feature feature { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
