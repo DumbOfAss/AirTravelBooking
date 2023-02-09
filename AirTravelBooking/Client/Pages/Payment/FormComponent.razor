@@ -1,0 +1,63 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@payment" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Name: </label>
+            <div>
+                <InputText @bind-Value="@payment.Name" class="form-control" />
+                <ValidationMessage For="@(() => payment.Name)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Card Number: </label>
+            <div>
+                <InputText @bind-Value="@payment.CardNumber" class="form-control" />
+                <ValidationMessage For="@(() => payment.CardNumber)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Security Code: </label>
+            <div>
+                <InputText @bind-Value="@payment.SecurityNumber" class="form-control" />
+                <ValidationMessage For="@(() => payment.SecurityNumber)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Date Of Issue: </label>
+            <div>
+                <InputText @bind-Value="@payment.DateOfIssue" class="form-control" />
+                <ValidationMessage For="@(() => payment.DateOfIssue)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Expiry Date: </label>
+            <div>
+                <InputText @bind-Value="@payment.ExpiryDate" class="form-control" />
+                <ValidationMessage For="@(() => payment.ExpiryDate)" />
+            </div>
+        </div>
+    </fieldset>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            Create Payment
+        </button>
+    }
+    <AirTravelBooking.Client.Components.BackToList Target="features" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Payment payment { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
+

@@ -1,0 +1,24 @@
+﻿@page "/Confirmation/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Confirmation</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="EditConfirmation" confirmation="confirmation" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Confirmation confirmation= new Confirmation();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        confirmation = await _client.GetFromJsonAsync<Confirmation>($"{EndPoints.PrioritiesEndPoint}/{id}");
+    }
+
+    async Task EditConfirmation()
+    {
+        await _client.PutAsJsonAsync($"{EndPoints.PrioritiesEndPoint}/{id}", confirmation);
+        _navManager.NavigateTo("/Confirmation/");
+    }
+
+}

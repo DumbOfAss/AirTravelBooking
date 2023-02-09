@@ -80,6 +80,7 @@ namespace AirTravelBooking.Server
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
+               
             });
         }
     }

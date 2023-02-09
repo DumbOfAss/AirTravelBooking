@@ -1,0 +1,76 @@
+﻿@page "/Confirmation"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Confirmation</h3>
+
+<a href="/Confirmation/Create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Confirmation
+</a>
+<br />
+<br />
+
+@if (Confirmations == null)
+{
+    <div class="alert alert-info">Loading Confirmation...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Destination</th>
+                <th>Airplane Model</th>
+                <th>Priority</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var confirmation in Confirmations)
+            {
+                <tr>
+                    <td>@confirmation.Customer.Name</td>
+                    <td>@confirmation.Destination.Name</td>
+                    <td>@confirmation.Airplane.Model</td>
+                    <td>@confirmation.Priority.Name</td>
+                    <td>
+                        <a href="/Bookings/view/@confirmation.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Bookings/edit/@confirmation.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(confirmation.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Confirmation> Confirmations;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Confirmations = await _client.GetFromJsonAsync<List<Confirmation>>($"{EndPoints.ConfirmationsEndPoint}");
+    }
+
+    async Task Delete(int ConfirmationId)
+    {
+        var confirmation = Confirmations.First(q => q.Id == ConfirmationId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {confirmation.Destination.Name}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{EndPoints.ConfirmationsEndPoint}/ConfirmationId");
+            await OnInitializedAsync();
+        }
+    }
+}
+

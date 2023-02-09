@@ -17,5 +17,8 @@ namespace AirTravelBooking.Client.Static
         public static readonly string CustomersEndPoint = $"{Prefix}/Customers";
         public static readonly string BookingsEndPoint = $"{Prefix}/Bookings";
         public static readonly string DestinationsEndPoint = $"{Prefix}/Destinations";
+        public static readonly string PaymentsEndPoint = $"{Prefix}/Payments";
+        public static readonly string ConfirmationsEndPoint = $"{Prefix}/Confirmations";
+        public static readonly string LoginEndPoint = $"{Prefix}/Login";
     }
 }

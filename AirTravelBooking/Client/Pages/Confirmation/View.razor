@@ -1,0 +1,14 @@
+﻿@page "/Confirmation/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>View</h3>
+<FormComponent confirmation="confirmation" Disabled="true" />
+@code {
+    [Parameter] public int id { get; set; }
+    Confirmation confirmation = new Confirmation();
+    protected async override Task OnParametersSetAsync()
+    {
+        confirmation = await
+        _client.GetFromJsonAsync<Confirmation>($"{EndPoints.ConfirmationsEndPoint}/{id}");
+    }
+}

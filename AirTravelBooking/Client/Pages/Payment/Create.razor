@@ -1,0 +1,20 @@
+﻿@page "/Payment/Create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Payment Information</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Payment" OnValidSubmit="@CreatePayment" payment="payment" />
+
+@code {
+    Payment payment = new Payment();
+
+    private async Task CreatePayment()
+    {
+        await _client.PostAsJsonAsync(EndPoints.PaymentsEndPoint, payment);
+        _navManager.NavigateTo("/Payment");
+    }
+
+}
